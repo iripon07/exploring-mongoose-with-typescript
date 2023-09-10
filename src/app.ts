@@ -1,6 +1,6 @@
 import cors from "cors";
 import express, { Application, NextFunction, Request, Response } from "express";
-import { Schema } from "mongoose";
+import { Schema, model } from "mongoose";
 
 const app: Application = express();
 
@@ -74,8 +74,7 @@ app.get("/", (req: Request, res: Response, next: NextFunction) => {
       },
     },
     dateOfBirth: {
-      type: String,
-      required: true,
+      type: String
     },
     gender: {
       type: String,
@@ -101,6 +100,27 @@ app.get("/", (req: Request, res: Response, next: NextFunction) => {
       required: true,
     },
   });
+
+  const User = model<IUser>("User", userSchema);
+  const createUserToDB = async () => {
+    const user = new User({
+      id: 101,
+      role: "Footballer",
+      password: "123456",
+      name: {
+        firstName: "Tanmoy",
+        lastName: "Das",
+      },
+      gender: "male",
+      contactNo: "0111111",
+      emergencyContactNo: "011",
+      presentAddress: "Brazil",
+      permanentAddress: "Africa",
+    });
+    await user.save();
+    console.log(user);
+  };
+  createUserToDB();
 });
 
 export default app;
