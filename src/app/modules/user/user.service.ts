@@ -5,6 +5,8 @@ export const createUserToDB = async (payload: IUser): Promise<IUser> => {
   const user = new User(payload);
   await user.save();
   console.log(user);
+//   user.fullName() //Custom instance method
+  console.log(user.fullName());
   return user;
 };
 
@@ -18,3 +20,8 @@ export const getUserByIdFromDB = async (
   const user = await User.findOne({ id: payload }, {name: 1, contactNo: 1});
   return user;
 };
+
+export const getAdminUsersFromDB = async () => {
+    const admins=await User.getAdminUsers()
+    return admins;
+}

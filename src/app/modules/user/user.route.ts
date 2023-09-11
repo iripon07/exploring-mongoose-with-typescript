@@ -3,6 +3,7 @@ import { createUser, getUserById, getUsers } from "./user.controller";
 const router = express.Router();
 
 router.get("/", getUsers);
+router.get("/admins", getUsers);
 router.get("/:id", getUserById);
 router.post("/create-user", createUser);
 
